@@ -6,8 +6,12 @@ const getComputerChoice = (choices) => {
   const randomNum = Math.floor(Math.random() * arrLength);
   return choices[randomNum];
 };
-const computerSelection = getComputerChoice(gameChoices);
-const playerSelection = "rock";
+
+const getPlayerSelection = () => {
+  return prompt(
+    "Choose your move: Rock, Paper, or Scissors. Enter your choice below!"
+  );
+};
 
 const isPlayerWin = (playerSelection, computerSelection) => {
   return (
@@ -25,4 +29,12 @@ const playRound = (playerSelection, computerSelection) => {
     : `You lose ${playerSelection} beats ${computerSelection}`;
 };
 
-console.log(playRound(playerSelection, computerSelection));
+const playGame = () => {
+  let gameResults = [];
+  for (let i = 0; i < 5; i++) {
+    const computerSelection = getComputerChoice(gameChoices);
+    const playerSelection = getPlayerSelection();
+    const gameResult = playRound(playerSelection, computerSelection);
+    gameResults.push(gameResult);
+  }
+};
