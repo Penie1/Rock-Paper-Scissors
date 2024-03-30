@@ -37,4 +37,19 @@ const playGame = () => {
     const gameResult = playRound(playerSelection, computerSelection);
     gameResults.push(gameResult);
   }
+  return getGameResult(gameResults);
 };
+
+const getGameResult = (gameResult) => {
+  const winResults = gameResult.filter((result) =>
+    result.startsWith("You win")
+  );
+
+  const loseResults = gameResult.filter((result) =>
+    result.startsWith("You lose")
+  );
+  if (winResults.length === loseResults.length) return "DRAW";
+
+  return winResults.length > loseResults.length ? "YOU WiN!" : "COMPUTER WiN!";
+};
+console.log(playGame());
