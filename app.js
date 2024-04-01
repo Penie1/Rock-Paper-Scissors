@@ -50,7 +50,7 @@ const getGameResult = (gameResult) => {
     result.startsWith("You lose")
   ).length;
 
-  displayFinalResult(gameResult);
+  showWinner(gameResult);
 
   if (winResults === loseResults) return "DRAW";
 
@@ -65,7 +65,7 @@ selectionBtns.addEventListener("click", (btn) => {
   console.log(playGame(playerSelection, computerSelection));
 });
 
-const displayFinalResult = (results) => {
+const showWinner = (results) => {
   console.log(results);
   const playerWinResults = results.filter((result) =>
     result.startsWith("You win")
