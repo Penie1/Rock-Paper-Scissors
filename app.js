@@ -1,5 +1,8 @@
 "use strict";
 
+const gameContent = document.getElementById("game__content");
+const selectionBtns = document.getElementById("selection__btns");
+const btns = document.querySelectorAll(".btn");
 const gameChoices = ["rock", "paper", "scissors"];
 const getComputerChoice = (choices) => {
   const arrLength = choices.length;
@@ -7,10 +10,9 @@ const getComputerChoice = (choices) => {
   return choices[randomNum];
 };
 
-const getPlayerSelection = () => {
-  return prompt(
-    "Choose your move: Rock, Paper, or Scissors. Enter your choice below!"
-  );
+const getPlayerSelection = (btn) => {
+  const userSelection = btn.target.dataset.selection;
+  return userSelection;
 };
 
 const isPlayerWin = (playerSelection, computerSelection) => {
@@ -29,14 +31,12 @@ const playRound = (playerSelection, computerSelection) => {
     : `You lose ${playerSelection} beats ${computerSelection}`;
 };
 
-const playGame = () => {
+const playGame = (player, computer) => {
   let gameResults = [];
-  for (let i = 0; i < 5; i++) {
-    const computerSelection = getComputerChoice(gameChoices);
-    const playerSelection = getPlayerSelection();
-    const gameResult = playRound(playerSelection, computerSelection);
-    gameResults.push(gameResult);
-  }
+  const gameResult = playRound(player, computer);
+  console.log(gameResult);
+  gameResults.push(gameResult);
+
   return getGameResult(gameResults);
 };
 
@@ -52,4 +52,12 @@ const getGameResult = (gameResult) => {
 
   return winResults.length > loseResults.length ? "YOU WiN!" : "COMPUTER WiN!";
 };
-console.log(playGame());
+
+selectionBtns.addEventListener("click", (btn) => {
+  const targetBtn = btn.target.closest(".btn");
+  if (!targetBtn) return;
+  const playerSelection = getPlayerSelection(btn);
+  const computerSelection = getComputerChoice(gameChoices);
+  // console.log(playerSelection);
+  console.log(playGame(playerSelection, computerSelection));
+});
