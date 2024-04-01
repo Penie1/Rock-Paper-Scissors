@@ -4,6 +4,8 @@ const gameContent = document.getElementById("game__content");
 const selectionBtns = document.getElementById("selection__btns");
 const btns = document.querySelectorAll(".btn");
 const gameChoices = ["rock", "paper", "scissors"];
+let gameResults = [];
+
 const getComputerChoice = (choices) => {
   const arrLength = choices.length;
   const randomNum = Math.floor(Math.random() * arrLength);
@@ -28,13 +30,13 @@ const playRound = (playerSelection, computerSelection) => {
 
   return isPlayerWin(playerSelection, computerSelection)
     ? `You win ${playerSelection} beats ${computerSelection}`
-    : `You lose ${playerSelection} beats ${computerSelection}`;
+    : `You lose ${computerSelection} beats ${playerSelection}`;
 };
 
 const playGame = (player, computer) => {
-  let gameResults = [];
   const gameResult = playRound(player, computer);
-  console.log(gameResult);
+
+  gameContent.textContent = gameResult;
   gameResults.push(gameResult);
 
   return getGameResult(gameResults);
@@ -43,14 +45,16 @@ const playGame = (player, computer) => {
 const getGameResult = (gameResult) => {
   const winResults = gameResult.filter((result) =>
     result.startsWith("You win")
-  );
-
+  ).length;
   const loseResults = gameResult.filter((result) =>
     result.startsWith("You lose")
-  );
-  if (winResults.length === loseResults.length) return "DRAW";
+  ).length;
 
-  return winResults.length > loseResults.length ? "YOU WiN!" : "COMPUTER WiN!";
+  displayFinalResult(gameResult);
+
+  if (winResults === loseResults) return "DRAW";
+
+  return winResults > loseResults ? "YOU WiN!" : "COMPUTER WiN!";
 };
 
 selectionBtns.addEventListener("click", (btn) => {
@@ -58,6 +62,22 @@ selectionBtns.addEventListener("click", (btn) => {
   if (!targetBtn) return;
   const playerSelection = getPlayerSelection(btn);
   const computerSelection = getComputerChoice(gameChoices);
-  // console.log(playerSelection);
   console.log(playGame(playerSelection, computerSelection));
 });
+
+const displayFinalResult = (results) => {
+  console.log(results);
+  const playerWinResults = results.filter((result) =>
+    result.startsWith("You win")
+  );
+  const playerLoseResults = results.filter((result) =>
+    result.startsWith("You lose")
+  );
+  if (playerWinResults.length === 5) {
+    gameContent.textContent = "You win!!";
+    gameResults = [];
+  } else if (playerLoseResults.length === 5) {
+    gameContent.textContent = "You lose!!";
+    gameResults = [];
+  }
+};
