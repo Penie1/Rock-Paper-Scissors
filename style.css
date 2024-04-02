@@ -58,11 +58,9 @@ body {
 #game__content {
   height: 400px;
   background-color: #ddddd9;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   text-align: center;
   font-size: 2.3rem;
   color: #363535;
@@ -91,4 +89,18 @@ body {
   border-radius: 15px;
   cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 10px 15px;
+}
+.btn:hover {
+  transform: translateY(5px);
+  color: #49494b;
+  background-color: #ddddd9;
+  transition: all 0.3s;
+}
+.hidden {
+  display: none !important;
+}
+#restart__btn {
+  width: 100%;
+  max-width: fit-content;
+  font-size: 1.4rem;
 }

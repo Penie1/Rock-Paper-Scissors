@@ -69,15 +69,24 @@ const showWinner = (results) => {
   console.log(results);
   const playerWinResults = results.filter((result) =>
     result.startsWith("You win")
-  );
+  ).length;
   const playerLoseResults = results.filter((result) =>
     result.startsWith("You lose")
-  );
-  if (playerWinResults.length === 5) {
-    gameContent.textContent = "You win!!";
-    gameResults = [];
-  } else if (playerLoseResults.length === 5) {
-    gameContent.textContent = "You lose!!";
-    gameResults = [];
+  ).length;
+
+  if (playerWinResults === 5 || playerLoseResults === 5) {
+    selectionBtns.classList.add("hidden");
+    gameContent.innerHTML = `<div>
+    <h1>${playerWinResults === 5 ? "YOU WIN!!" : "YOU LOSE!!"}</h1>
+    <button id="restart__btn" class="btn">Restart Game</button>
+    </div>`;
+    const restartBtn = document.getElementById("restart__btn");
+    restartBtn.addEventListener("click", restartGame);
   }
+};
+
+const restartGame = () => {
+  selectionBtns.classList.remove("hidden");
+  gameContent.textContent = `Select Your Move`;
+  gameResults = [];
 };
